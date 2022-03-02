@@ -74,11 +74,11 @@ async def main():
                         if type(e).__name__ == "YouBlockedUserError":
                             print(f'🚧 You\'ve blocked @{each_bot}. Please unblock it, until next run, I\'ll mark it as down. 🚧') # you blocked the bot :(
                         bot_status[each_bot] = {'name':name.first_name, 'status':False}
-                return bot_status
+                
             except FloodWaitError as e:
                 print('Have to sleep', e.seconds, 'seconds')
                 time.sleep(e.seconds)
-                return main()
+            return bot_status
 
 # edit the message with status at telegram
 async def edit_message(data):
