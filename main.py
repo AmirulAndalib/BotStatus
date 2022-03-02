@@ -61,19 +61,23 @@ async def main():
     bot_status = {}
     async with client:
         for each_bot in bots:
-            async with client.conversation(each_bot, exclusive=False) as conv:
-                name = await client.get_entity(each_bot)
-                try:
-                    sent = await conv.send_message('/' + bots[each_bot]['start'])
-                    received = await conv.get_response(timeout=bots[each_bot]['sleep'])
-                    await received.delete()
-                    bot_status[each_bot] = {'name':name.first_name, 'status':True}
-                    await sent.delete()
-                except Exception as e:
-                    if type(e).__name__ == "YouBlockedUserError":
-                        print(f'🚧 You\'ve blocked @{each_bot}. Please unblock it, until next run, I\'ll mark it as down. 🚧') # you blocked the bot :(
-                    bot_status[each_bot] = {'name':name.first_name, 'status':False}
-        return bot_status
+            try:
+                async with client.conversation(each_bot, exclusive=False) as conv:
+                    name = await client.get_entity(each_bot)
+                    try:
+                        sent = await conv.send_message('/' + bots[each_bot]['start'])
+                        received = await conv.get_response(timeout=bots[each_bot]['sleep'])
+                        await received.delete()
+                        bot_status[each_bot] = {'name':name.first_name, 'status':True}
+                        await sent.delete()
+                    except Exception as e:
+                        if type(e).__name__ == "YouBlockedUserError":
+                            print(f'🚧 You\'ve blocked @{each_bot}. Please unblock it, until next run, I\'ll mark it as down. 🚧') # you blocked the bot :(
+                        bot_status[each_bot] = {'name':name.first_name, 'status':False}
+                return bot_status
+            except FloodWaitError as e:
+                print('Have to sleep', e.seconds, 'seconds')
+                time.sleep(e.seconds)
 
 # edit the message with status at telegram
 async def edit_message(data):
