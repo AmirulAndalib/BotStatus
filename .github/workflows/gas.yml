@@ -1,11 +1,11 @@
-name: ⚡️ Update Status
+name: ⚡️ Update Bots Status
 on:
   workflow_dispatch:
   schedule:
       - cron: "0 */1 * * *"
 jobs:
   update-readme-with-projects:
-    name: Run the bots ...
+    name: Check the bots
     runs-on: ubuntu-latest
     steps:
       - uses: yourtulloh/botstatus@main
