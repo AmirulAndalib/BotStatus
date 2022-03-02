@@ -7,7 +7,6 @@
 import os
 import re
 import json
-import github
 import logging
 import telethon
 import requests
