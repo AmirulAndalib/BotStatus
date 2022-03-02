@@ -27,7 +27,7 @@ api_id = os.getenv('APP_ID', None) # API ID from my.telegram.org
 api_hash = os.getenv('API_HASH', None) # APP hash from my.telegram.org
 session = os.getenv('SESSION', None) # session string via telethon.
 client = telethon.TelegramClient(telethon.sessions.StringSession(session), api_id, api_hash) # none of your business.
-client.flood_sleep_threshold = 24 * 60 * 60
+#client.flood_sleep_threshold = 24 * 60 * 60
 all_mixed_ids = os.getenv('IDS', None) # All Chat IDs along with message IDs (Telegram) to edit in format chat_id:message_id. In case of many, separate them with spaces. Eg, -100123456xxx:8x 123456xx:2xx
 # Optionals
 edit_in_telegram = os.getenv('EDIT_IN_TELEGRAM', 'true') # If you want to edit status in Telegram, set it to True else False
