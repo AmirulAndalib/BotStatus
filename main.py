@@ -78,6 +78,7 @@ async def main():
             except FloodWaitError as e:
                 print('Have to sleep', e.seconds, 'seconds')
                 time.sleep(e.seconds)
+                return main()
 
 # edit the message with status at telegram
 async def edit_message(data):
@@ -105,12 +106,7 @@ def PasteMe(json=None):
 
 # run the script via __main__ style
 if __name__ == '__main__':
-    try:
-        json_data = client.loop.run_until_complete(main())
-    except FloodWaitError as e:
-        print('Have to sleep', e.seconds, 'seconds')
-        time.sleep(e.seconds)
-        json_data = client.loop.run_until_complete(main())
+    json_data = client.loop.run_until_complete(main())
     os.system(f'echo \"output={PasteMe(json=json_data)}\" >> $GITHUB_ENV') # sets JSON data as output, so that you can use the json data for other use also.
     display()
     for each in json_data:
