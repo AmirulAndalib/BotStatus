@@ -119,7 +119,10 @@ def PasteMe(json=None):
 # run the script via __main__ style
 if __name__ == '__main__':
     json_data = client.loop.run_until_complete(main())
-    os.system(f'echo \"output={PasteMe(json=json_data)}\" >> $GITHUB_ENV') # sets JSON data as output, so that you can use the json data for other use also.
+    try:
+        os.system(f'echo \"output={PasteMe(json=json_data)}\" >> $GITHUB_ENV') # sets JSON data as output, so that you can use the json data for other use also.
+    except Exception as e:
+        print(e)
     display()
     for each in json_data:
         print(f"🔸 {json_data[each]['name']} [@{each}] is {'🟢' if json_data[each]['status'] else '🔴'}")
