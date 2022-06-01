@@ -104,10 +104,16 @@ async def edit_message(data):
         for chat_id, message_id in chats_to_edit:
             try:
                 await client.edit_message(int(chat_id), int(message_id), text, link_preview=False)
+            except FloodWaitError as e:
+                print(f'Have sleep to edit msg in {e.seconds} ...')
+                time.sleep(e.seconds)
+                await client.edit_message(int(chat_id), int(message_id), text, link_preview=False)
             except MessageIdInvalidError:
                 print(f'Provided message ID ({message_id}) is invalid of chat ({chat_id}), Maybe message Id representing the Message is Deleted or was not sent before.')
             except MessageAuthorRequiredError:
                 print(f'You don\'t have enough rights to edit this message.\n Chat : {chat_id} with Message {message_id}')
+            except Exception as e:
+                print(f'Got Error while edit message: {e}')
 
 # pastes the JSON output to spaceb.in/ and returns the raw link
 def PasteMe(json=None):
