@@ -2,7 +2,7 @@ name: Update Bots Status
 on:
   workflow_dispatch:
   schedule:
-      - cron: "*/6 * * * *"
+      - cron: "* */3 * * *"
 jobs:
   update-readme-with-projects:
     name: Check the bots
